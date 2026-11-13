@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>今日專屬花語</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+      background-color: #fff5f7;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #4a4a4a;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 24px;
+      padding: 40px 28px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 12px 32px rgba(235, 160, 175, 0.25);
+      border: 1px solid rgba(255, 220, 228, 0.6);
+      animation: fadeIn 0.8s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .date {
+      font-size: 13px;
+      color: #a89096;
+      letter-spacing: 1.5px;
+      margin-bottom: 20px;
+    }
+    .emoji {
+      font-size: 64px;
+      margin-bottom: 16px;
+      display: inline-block;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .flower-name {
+      font-size: 26px;
+      font-weight: 700;
+      color: #d65a74;
+      margin-bottom: 8px;
+    }
+    .meaning-tag {
+      display: inline-block;
+      background: #fff0f3;
+      color: #d65a74;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+    .message {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #5c5c5c;
+      padding-top: 20px;
+      border-top: 1px dashed #f0d5dc;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="date" id="today-date"></div>
+    <div class="emoji" id="flower-emoji">🌸</div>
+    <div class="flower-name" id="flower-name">載入中...</div>
+    <div class="meaning-tag" id="flower-meaning"></div>
+    <div class="message" id="flower-message"></div>
+  </div>
+
+  <script>
+    // 花語資料庫（你可以自由修改或增加裡面的內容！）
+    const flowers = [
+      { emoji: "🌹", name: "紅玫瑰", meaning: "熱烈的愛與真心", message: "今天也想告訴你，遇見你是我最幸運的事。" },
+      { emoji: "🌻", name: "向日葵", meaning: "沉默的愛與陽光", message: "無論今天天氣如何，你永遠是我眼裡最耀眼的光。" },
+      { emoji: "🌷", name: "鬱金香", meaning: "永恆的祝福與體貼", message: "希望你今天一切順利，記得按時吃飯、好好休息。" },
+      { emoji: "🌼", name: "小雛菊", meaning: "藏在心底的喜歡", message: "平凡的日子裡，因為有你而變得特別溫柔。" },
+      { emoji: "🌸", name: "櫻花", meaning: "純潔與幸福的降臨", message: "願你今天的每一個瞬間，都像春風一樣輕盈快樂。" },
+      { emoji: "🪻", name: "薰衣草", meaning: "等待愛情與平靜", message: "如果今天覺得累了，深呼吸一下，我一直都在你身邊。" },
+      { emoji: "💐", name: "滿天星", meaning: "甘願做配角的溫柔", message: "在屬於你的舞台上發光吧，我會一直為你鼓掌。" },
+      { emoji: "🌺", name: "扶桑花", meaning: "新鮮的戀情與熱情", message: "每天都比昨天更喜歡你一點點。" },
+      { emoji: "🪷", name: "蓮花", meaning: "純真與安心", message: "願所有的煩惱都遠離你，今天也要開開心心的喔！" },
+      { emoji: "🌿", name: "迷迭香", meaning: "留住美好回憶", message: "我們一起走過的每一天，都是我最珍貴的寶藏。" }
+    ];
+
+    // 取得今天日期並計算當天對應的花語
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    document.getElementById('today-date').textContent = `${year} . ${month} . ${day}`;
+
+    // 計算從基準日到今天的天數，確保每天固定輪換不同花語
+    const dayIndex = Math.floor(now.getTime() / (1000 * 60 * 60 * 24));
+    const todayFlower = flowers[dayIndex % flowers.length];
+
+    // 顯示在畫面上
+    document.getElementById('flower-emoji').textContent = todayFlower.emoji;
+    document.getElementById('flower-name').textContent = todayFlower.name;
+    document.getElementById('flower-meaning').textContent = `花語：${todayFlower.meaning}`;
+    document.getElementById('flower-message').textContent = todayFlower.message;
+  </script>
+
+</body>
+</html>
