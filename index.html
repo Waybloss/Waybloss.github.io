@@ -20,14 +20,12 @@
       transition: background 0.6s ease;
     }
 
-    /* 5 種花園裝飾主題風格 */
     body.theme-green { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 45%, #e8effd 100%); }
     body.theme-pink { background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 45%, #fce7f3 100%); }
     body.theme-purple { background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 45%, #fbcfe8 100%); }
     body.theme-sunflower { background: linear-gradient(135deg, #fefce8 0%, #fef9c3 45%, #ffedd5 100%); }
     body.theme-night { background: linear-gradient(135deg, #0f172a 0%, #1e293b 45%, #312e81 100%); color: #f1f5f9; }
 
-    /* 背景光暈 */
     .bg-glow {
       position: fixed;
       width: 320px;
@@ -42,7 +40,6 @@
     .glow-1 { top: -80px; left: -80px; background: #bbf7d0; }
     .glow-2 { bottom: -80px; right: -80px; background: #bfdbfe; }
 
-    /* 背景飄落容器 */
     .petals-container {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -64,7 +61,6 @@
       100% { transform: translateY(110vh) rotate(360deg) translateX(35px); opacity: 0; }
     }
 
-    /* 3D 翻頁舞台 */
     .flip-scene {
       position: relative;
       z-index: 2;
@@ -89,7 +85,6 @@
       transform: rotateY(180deg);
     }
 
-    /* 正反兩面共用卡片外框 */
     .card-face {
       grid-row-start: 1;
       grid-column-start: 1;
@@ -119,7 +114,6 @@
       transform: rotateY(180deg);
     }
 
-    /* 公司名稱醒目置頂 */
     .brand-title {
       font-size: 22px;
       font-weight: 800;
@@ -130,7 +124,6 @@
       text-shadow: 0 2px 10px rgba(255, 77, 109, 0.2);
     }
 
-    /* 頂部日期與編號列 */
     .top-bar {
       display: flex;
       justify-content: space-between;
@@ -156,7 +149,6 @@
     }
     body.theme-night .day-count { color: #a3e635; }
 
-    /* 圖示光環 */
     .emoji-wrapper {
       position: relative;
       width: 92px;
@@ -192,7 +184,6 @@
       50% { transform: translateY(-5px); }
     }
 
-    /* 花名與花語標籤 */
     .flower-name {
       font-size: 24px;
       font-weight: 800;
@@ -216,7 +207,6 @@
     }
     body.theme-night .meaning-tag { background: linear-gradient(90deg, #1e293b 0%, #334155 100%); color: #86efac; }
 
-    /* 祝福語區塊 */
     .message-box {
       background: rgba(240, 253, 244, 0.85);
       border-radius: 16px;
@@ -241,7 +231,6 @@
     }
     body.theme-night .lucky-tip { color: #86efac; border-top-color: #334155; }
 
-    /* 按鈕群組 */
     .btn-group {
       display: flex;
       flex-direction: column;
@@ -293,7 +282,6 @@
     }
     body.theme-night .footer-note { color: #94a3b8; }
 
-    /* ================= 背面：每日澆花與盲盒養成 ================= */
     .garden-header {
       margin-bottom: 4px;
     }
@@ -343,7 +331,6 @@
     }
     body.theme-night .stage-badge { background: #334155; color: #86efac; }
 
-    /* 進度條與說明 */
     .progress-container {
       background: #f0fdf4;
       border: 1px solid #bbf7d0;
@@ -396,7 +383,6 @@
       cursor: default;
     }
 
-    /* ================= 彈出視窗統一樣式 ================= */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -452,7 +438,6 @@
       box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
     }
 
-    /* 盲盒特效視窗 */
     .box-container {
       font-size: 64px;
       margin: 8px 0 12px;
@@ -463,7 +448,6 @@
       100% { transform: rotate(8deg) scale(1.05); }
     }
 
-    /* 圖鑑分區樣式 */
     .dex-section-title {
       font-size: 12px;
       font-weight: 700;
@@ -523,7 +507,6 @@
       color: #d97706;
     }
 
-    /* 裝飾風格選擇按鈕 */
     .theme-select-box {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -546,7 +529,6 @@
       color: white;
     }
 
-    /* 心情留言板輸入框 */
     .note-input-box {
       width: 100%;
       background: #f8fafc;
@@ -578,16 +560,13 @@
 </head>
 <body class="theme-green">
 
-  <!-- 背景光暈與飄落元素 -->
   <div class="bg-glow glow-1" id="glow-1"></div>
   <div class="bg-glow glow-2" id="glow-2"></div>
   <div class="petals-container" id="petals"></div>
 
-  <!-- 3D 翻頁舞台 -->
   <div class="flip-scene">
     <div class="flip-card" id="flip-card">
 
-      <!-- ==================== 正面：今日專屬花語 ==================== -->
       <div class="card-face card-front" id="flower-card">
         <div>
           <div class="brand-title">Waybloss</div>
@@ -630,7 +609,6 @@
         </div>
       </div>
 
-      <!-- ==================== 背面：每日澆花與盲盒養成 ==================== -->
       <div class="card-face card-back">
         <div>
           <div class="brand-title">Waybloss</div>
@@ -676,7 +654,6 @@
     </div>
   </div>
 
-  <!-- ==================== 彈出視窗 1：花園圖鑑與裝飾風格 ==================== -->
   <div class="modal-overlay" id="dex-modal">
     <div class="modal-card">
       <div class="modal-title">🏡 你的 Waybloss 花園</div>
@@ -692,11 +669,9 @@
       <div class="modal-text" style="font-size: 12px; margin-bottom: 4px; text-align: left; font-weight: 700; color: #475569;">✍️ 今日花園心情筆記：</div>
       <textarea class="note-input-box" id="garden-note" placeholder="寫下今天的心情或給自己的祝福..." rows="2" oninput="saveGardenNote()"></textarea>
 
-      <!-- 普通款式區 (共 7 款) -->
       <div class="dex-section-title">🌸 精選普通款（共 7 款）</div>
       <div class="dex-grid" id="dex-grid-normal"></div>
 
-      <!-- 特別款式區 (共 2 款隱藏款) -->
       <div class="dex-section-title">🌟 隱藏款式專區（共 2 款 · 稀有盲盒）</div>
       <div class="dex-grid-special" id="dex-grid-special"></div>
 
@@ -704,7 +679,6 @@
     </div>
   </div>
 
-  <!-- ==================== 彈出視窗 2：盲盒拆封儀式 ==================== -->
   <div class="modal-overlay" id="unbox-modal">
     <div class="modal-card" style="border: 3px solid #ec4899;">
       <div style="font-size: 12px; font-weight: 700; color: #db2777; letter-spacing: 1px;">🎉 恭喜花朵成熟！</div>
@@ -715,7 +689,6 @@
     </div>
   </div>
 
-  <!-- ==================== 彈出視窗 3：隱藏款祝賀 ==================== -->
   <div class="modal-overlay" id="secret-modal">
     <div class="modal-card" style="border: 3px solid #f59e0b; background: #fffbeb;">
       <div style="font-size: 46px; margin-bottom: 4px;" id="secret-emoji-icon">🍀</div>
@@ -728,7 +701,6 @@
   </div>
 
   <script>
-    // 1. 背景飄落元素
     const petalsContainer = document.getElementById('petals');
     function updatePetals(theme) {
       petalsContainer.innerHTML = '';
@@ -750,7 +722,6 @@
       }
     }
 
-    // 2. 圖鑑資料庫：7 款普通款 + 2 款隱藏款 (四葉草、鐵刀木)
     const normalFlowers = [
       { id: 0, emoji: "🌷", name: "優雅鬱金香", meaning: "永恆祝福", type: "普通款", rate: "15%" },
       { id: 1, emoji: "🌹", name: "真愛紅玫瑰", meaning: "熱烈真摯", type: "普通款", rate: "15%" },
@@ -768,7 +739,6 @@
 
     const allFlowers = [...normalFlowers, ...specialFlowers];
 
-    // 每日花語輪換資料庫 (使用我們精選的普通花卉)
     const flowers = [
       { emoji: "🌷", name: "優雅鬱金香", meaning: "永恆的祝福與體貼", desc: "希望你今天一切順利，再忙也要記得按時吃飯、好好休息。" },
       { emoji: "🌹", name: "真愛紅玫瑰", meaning: "熱烈的愛與真心", desc: "願你今天被滿滿的愛意與好運包圍，勇敢做自己喜歡的事。" },
@@ -785,7 +755,6 @@
       "🍀 Waybloss 幸運色：天空藍｜放寬心胸，事情會比想像中順利"
     ];
 
-    // 個人專屬種子與日期
     let userSeed = localStorage.getItem('waybloss_flower_seed');
     if (!userSeed) {
       userSeed = Math.floor(Math.random() * 999999) + 1;
@@ -817,13 +786,11 @@
     document.getElementById('flower-message').textContent = todayFlower.desc;
     document.getElementById('lucky-tip').textContent = todayBlessing;
 
-    // 3D 翻頁控制
     function flipCard(event) {
       if (event) event.stopPropagation();
       document.getElementById('flip-card').classList.toggle('is-flipped');
     }
 
-    // 正面點擊特效
     document.getElementById('flower-card').addEventListener('click', function(e) {
       if (e.target.closest('.action-btn')) return;
       spawnParticles(e.clientX, e.clientY, ['🌷', '✨', '💚', '🌸', '🎁'], 1);
@@ -843,7 +810,6 @@
       }
     }
 
-    // 複製功能
     function copyFlower(event) {
       event.stopPropagation();
       const shareText = `【Waybloss · ${year}.${month}.${day} 專屬幸運花語】\n${todayFlower.emoji} ${todayFlower.name}（花語：${todayFlower.meaning}）\n「${todayFlower.desc}」\n${todayBlessing}\n🔗 追蹤 IG：https://www.instagram.com/waybloss`;
@@ -857,7 +823,6 @@
       });
     }
 
-    // ================= 盲盒養成與圖鑑系統 =================
     let waterCount = parseInt(localStorage.getItem('waybloss_water_count') || '0', 10);
     let lastWaterDate = localStorage.getItem('waybloss_last_water_date') || '';
     let unlockedDex = JSON.parse(localStorage.getItem('waybloss_unlocked_dex') || '[]');
@@ -963,7 +928,6 @@
       }
     }
 
-    // ================= 盲盒拆封與圖鑑管理 =================
     function openUnboxModal(event) {
       if (event) event.stopPropagation();
       document.getElementById('unbox-modal').classList.add('active');
@@ -1011,7 +975,6 @@
     }
 
     function renderDexGrids() {
-      // 渲染普通款 (共 7 款)
       const gridNormal = document.getElementById('dex-grid-normal');
       gridNormal.innerHTML = '';
       normalFlowers.forEach(flower => {
@@ -1026,7 +989,6 @@
         gridNormal.appendChild(item);
       });
 
-      // 渲染隱藏款 (共 2 款)
       const gridSpecial = document.getElementById('dex-grid-special');
       gridSpecial.innerHTML = '';
       specialFlowers.forEach(flower => {
@@ -1042,7 +1004,6 @@
       });
     }
 
-    // 花園裝飾風格切換
     function setTheme(themeName) {
       document.body.className = `theme-${themeName}`;
       document.querySelectorAll('.theme-chip').forEach(chip => chip.classList.remove('active'));
@@ -1071,16 +1032,14 @@
     const savedTheme = localStorage.getItem('waybloss_garden_theme') || 'green';
     setTheme(savedTheme);
 
-    // 心情留言板存檔
     const noteBox = document.getElementById('garden-note');
-    const savedNote = localStorage.getItem('waybloss_garden_note'] || '';
+    const savedNote = localStorage.getItem('waybloss_garden_note') || '';
     noteBox.value = savedNote;
 
     function saveGardenNote() {
       localStorage.setItem('waybloss_garden_note', noteBox.value);
     }
 
-    // 初始化花園
     updateGardenUI();
   </script>
 
