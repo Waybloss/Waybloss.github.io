@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Waybloss · 每日花語 & 我的小花園 ✨</title>
+  <title>Waybloss · 每日花語 & 盲盒花園 ✨</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body {
@@ -276,7 +276,7 @@
       letter-spacing: 0.5px;
     }
 
-    /* ================= 背面：每日澆花與圖鑑小遊戲 ================= */
+    /* ================= 背面：每日澆花與盲盒養成 ================= */
     .garden-header {
       margin-bottom: 6px;
     }
@@ -372,7 +372,7 @@
       cursor: default;
     }
 
-    /* ================= 彈出視窗（隱藏款四葉草祝賀 & 我的小花園圖鑑） ================= */
+    /* ================= 彈出視窗統一樣式 ================= */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -429,20 +429,34 @@
       box-shadow: 0 5px 14px rgba(16, 185, 129, 0.3);
     }
 
+    /* 盲盒拆封特效視窗 */
+    .box-container {
+      font-size: 70px;
+      margin: 10px 0 15px;
+      animation: boxShake 0.6s ease-in-out infinite alternate;
+    }
+    @keyframes boxShake {
+      0% { transform: rotate(-8deg) scale(1); }
+      100% { transform: rotate(8deg) scale(1.05); }
+    }
+
     /* 圖鑑網格清單 */
     .dex-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
       margin: 14px 0;
+      max-height: 200px;
+      overflow-y: auto;
+      padding-right: 4px;
     }
     .dex-item {
       background: #f8fafc;
       border: 2px solid #e2e8f0;
-      border-radius: 14px;
-      padding: 8px 4px;
+      border-radius: 12px;
+      padding: 6px 2px;
       text-align: center;
-      font-size: 11px;
+      font-size: 10px;
       color: #64748b;
     }
     .dex-item.unlocked {
@@ -451,13 +465,19 @@
       color: #166534;
       font-weight: 700;
     }
+    .dex-item.secret-unlocked {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #b45309;
+      font-weight: 700;
+    }
     .dex-emoji {
-      font-size: 26px;
+      font-size: 24px;
       display: block;
       margin-bottom: 2px;
     }
 
-    /* 裝飾風格選擇按鈕 */
+    /* 裝飾風格按鈕 */
     .theme-select-box {
       display: flex;
       gap: 8px;
@@ -480,7 +500,6 @@
       color: white;
     }
 
-    /* 特效動畫 */
     .pop-clover {
       position: fixed;
       pointer-events: none;
@@ -531,7 +550,7 @@
         <div>
           <div class="btn-group">
             <button class="action-btn garden-btn" onclick="flipCard(event)">
-              <span>🌱 進入每日澆花小遊戲</span>
+              <span>🌱 進入盲盒花園小遊戲</span>
             </button>
             <button class="action-btn" style="background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);" onclick="openDexModal(event)">
               <span>🏡 我的小花園（圖鑑與裝飾）</span>
@@ -548,12 +567,12 @@
         </div>
       </div>
 
-      <!-- ==================== 背面：每日澆花養成 ==================== -->
+      <!-- ==================== 背面：每日澆花與盲盒養成 ==================== -->
       <div class="card-face card-back">
         <div>
           <div class="brand-title">Waybloss</div>
           <div class="garden-header">
-            <div class="garden-subtitle">🌿 我的專屬幸運花圃 · 每日養成 🌿</div>
+            <div class="garden-subtitle">🎁 我的專屬幸運盲盒花圃 🎁</div>
           </div>
 
           <div class="pot-stage" id="pot-stage" onclick="openDexModal(event)" title="點擊查看花園圖鑑">
@@ -570,7 +589,7 @@
               <div class="progress-bar-fill" id="progress-fill"></div>
             </div>
             <div class="garden-desc" id="garden-desc">
-              每天碰一下 NFC 澆水灌溉，陪伴種子長大！滿 10 天將隨機盛開神祕花朵，更有機會抽中隱藏版四葉幸運草喔！
+              每天澆水灌溉，滿 10 天即可拆開神祕花卉盲盒！有多款普通款與稀有隱藏款等你來收集解鎖！
             </div>
           </div>
         </div>
@@ -587,42 +606,53 @@
               <span>↩️ 翻回今日專屬花語</span>
             </button>
           </div>
-          <div class="footer-note">小提示：每天限澆水一次，點擊盆栽可看所有品種</div>
+          <div class="footer-note">小提示：每天限澆水一次，點擊盆栽可看所有盲盒品種</div>
         </div>
       </div>
 
     </div>
   </div>
 
-  <!-- ==================== 彈出視窗：花園圖鑑與裝飾 ==================== -->
+  <!-- ==================== 彈出視窗 1：花園圖鑑與裝飾 ==================== -->
   <div class="modal-overlay" id="dex-modal">
     <div class="modal-card">
-      <div class="modal-title">🏡 你的 Waybloss 小花園</div>
-      <div class="modal-text" style="font-size: 13px; margin-bottom: 10px;">選擇你的花園裝飾風格：</div>
+      <div class="modal-title">🏡 你的 Waybloss 花園</div>
+      <div class="modal-text" style="font-size: 13px; margin-bottom: 8px;">選擇你的花園裝飾風格：</div>
       <div class="theme-select-box">
         <div class="theme-chip active" id="chip-green" onclick="setTheme('green')">🌿 綠意溫室</div>
         <div class="theme-chip" id="chip-pink" onclick="setTheme('pink')">🌸 浪漫粉櫻</div>
         <div class="theme-chip" id="chip-purple" onclick="setTheme('purple')">🔮 夢幻紫藤</div>
       </div>
 
-      <div class="modal-text" style="font-size: 13px; margin-bottom: 6px;">🌱 花園解鎖圖鑑 (已解鎖 <strong id="unlock-count">0</strong>/8)：</div>
+      <div class="modal-text" style="font-size: 13px; margin-bottom: 6px;">🎁 盲盒圖鑑 (已解鎖 <strong id="unlock-count">0</strong>/8)：</div>
       <div class="dex-grid" id="dex-grid">
-        <!-- 動態產生圖鑑清單 -->
+        <!-- 動態圖鑑清單 -->
       </div>
 
       <button class="modal-close-btn" onclick="closeDexModal()">關閉花園</button>
     </div>
   </div>
 
-  <!-- ==================== 彈出視窗：隱藏款四葉草恭喜祝賀 ==================== -->
+  <!-- ==================== 彈出視窗 2：盲盒拆封儀式視窗 ==================== -->
+  <div class="modal-overlay" id="unbox-modal">
+    <div class="modal-card" style="border: 3px solid #ec4899;">
+      <div style="font-size: 13px; font-weight: 700; color: #db2777; letter-spacing: 1px;">🎉 恭喜花朵成熟！</div>
+      <div class="box-container" id="box-icon">🎁</div>
+      <div class="modal-title" style="color: #be185d;">正在為你拆開神祕盲盒...</div>
+      <div class="modal-text" id="unbox-desc">點擊下方按鈕，看看這次抽中了哪一款驚喜花卉！</div>
+      <button class="modal-close-btn" id="unbox-action-btn" style="background: linear-gradient(135deg, #ec4899, #be185d);" onclick="revealBlindBox()">📦 點擊拆開盲盒！</button>
+    </div>
+  </div>
+
+  <!-- ==================== 彈出視窗 3：隱藏款專屬祝賀視窗 ==================== -->
   <div class="modal-overlay" id="secret-modal">
-    <div class="modal-card" style="border: 3px solid #10b981;">
-      <div style="font-size: 50px; margin-bottom: 5px;">🍀✨</div>
-      <div class="modal-title" style="color: #059669;">【恭喜解鎖隱藏款！】</div>
-      <div class="modal-text" id="secret-msg-text">
-        太神啦！你竟然成功抽中並養成了傳說中的**隱藏版四葉幸運草**！這代表接下來的日子裡，好運與奇蹟將會連續不斷地降臨在你身上，願所有的美好與溫柔都與你環環相扣！💚
+    <div class="modal-card" style="border: 3px solid #f59e0b; background: #fffbeb;">
+      <div style="font-size: 50px; margin-bottom: 5px;" id="secret-emoji-icon">🌟💎</div>
+      <div class="modal-title" style="color: #b45309;" id="secret-title-text">【恭喜抽中極稀有隱藏款！】</div>
+    <div class="modal-text" id="secret-msg-text" style="color: #78350f;">
+        太神啦！你竟然在盲盒中一發入魂，抽中了傳說中的極稀有隱藏款式！這代表接下來的日子裡，好運與奇蹟將會連續不斷地降臨在你身上！
       </div>
-      <button class="modal-close-btn" onclick="closeSecretModal()">太棒了，收下幸運！</button>
+      <button class="modal-close-btn" style="background: #f59e0b;" onclick="closeSecretModal()">太棒了，收下歐氣！</button>
     </div>
   </div>
 
@@ -640,37 +670,33 @@
       petalsContainer.appendChild(petal);
     }
 
-    // 2. 豐富花卉與隱藏款資料庫 (共 8 種品種，編號 7 為隱藏款四葉幸運草)
+    // 2. 盲盒花卉圖鑑資料庫 (0~4 為普通款，5~7 為稀有/隱藏款式)
     const allFlowers = [
-      { id: 0, emoji: "🌸", name: "早春粉櫻", meaning: "幸福與希望的降臨" },
-      { id: 1, emoji: "🌻", name: "燦爛向日葵", meaning: "溫暖的陽光與勇氣" },
-      { id: 2, emoji: "🌹", name: "真愛紅玫瑰", meaning: "熱烈真摯的心意" },
-      { id: 3, emoji: "🌷", name: "優雅鬱金香", meaning: "永恆的祝福與體貼" },
-      { id: 4, emoji: "🪻", name: "靜謐薰衣草", meaning: "平靜與療癒的溫柔" },
-      { id: 5, emoji: "🌼", name: "純真小雛菊", meaning: "藏在心底的喜歡" },
-      { id: 6, emoji: "🪷", name: "清淨聖潔蓮", meaning: "內心的安寧與純粹" },
-      { id: 7, emoji: "🍀", name: "【隱藏款】傳說四葉幸運草", meaning: "奇蹟與無敵幸運降臨" }
+      { id: 0, emoji: "🌸", name: "早春粉櫻", meaning: "幸福與希望的降臨", type: "普通款" },
+      { id: 1, emoji: "🌻", name: "燦爛向日葵", meaning: "溫暖的陽光與勇氣", type: "普通款" },
+      { id: 2, emoji: "🌹", name: "真愛紅玫瑰", meaning: "熱烈真摯的心意", type: "普通款" },
+      { id: 3, emoji: "🌷", name: "優雅鬱金香", meaning: "永恆的祝福與體貼", type: "普通款" },
+      { id: 4, emoji: "🌼", name: "純真小雛菊", meaning: "藏在心底的喜歡", type: "普通款" },
+      { id: 5, emoji: "🍀", name: "傳說四葉幸運草", meaning: "奇蹟與無敵幸運降臨", type: "稀有隱藏款", secretTitle: "【恭喜抽中稀有隱藏款：四葉幸運草！】", secretDesc: "傳說中只有萬分之一機率能遇見的四葉草！代表著真愛與無與倫比的好運，願你天天都被幸運女神眷顧！💚" },
+      { id: 6, emoji: "✨", name: "閃耀黃金星光花", meaning: "耀眼光芒與夢想成真", type: "稀有隱藏款", secretTitle: "【恭喜抽中稀有隱藏款：黃金星光花！】", secretDesc: "夜空中最閃耀的星光化身為花朵！這象徵著你擁有無限的潛能與光芒，所有心中的願望都將閃閃發光並實現！🌟" },
+      { id: 7, emoji: "💎", name: "晶鑽永恆水晶蓮", meaning: "純潔無瑕與永恆守護", type: "極稀有隱藏款", secretTitle: "【恭喜抽中【極稀有】隱藏款：水晶蓮！】", secretDesc: "天啊！這是盲盒中最頂級的極稀有隱藏款！晶瑩剔透的水晶蓮代表著永恆不變的真心與純粹守護，擁有它的人注定會收穫一生一世的幸福！💎✨" }
     ];
 
-    // 花語每日資料庫
+    // 花語每日資料庫與祝福語
     const flowers = [
       { emoji: "🍀", name: "四葉幸運草", meaning: "意想不到的奇蹟與幸運", desc: "恭喜你感應到四葉草！今天會有意想不到的小確幸與好運降臨在你身上。" },
       { emoji: "🌹", name: "紅玫瑰", meaning: "熱烈的愛與真心", desc: "願你今天被滿滿的愛意與好運包圍，勇敢做自己喜歡的事。" },
       { emoji: "🌻", name: "向日葵", meaning: "沉默的愛與陽光", desc: "無論今天天氣如何，你永遠是自己世界裡最耀眼的小太陽。" },
       { emoji: "🌷", name: "鬱金香", meaning: "永恆的祝福與體貼", desc: "希望你今天一切順利，再忙也要記得按時吃飯、好好休息。" },
       { emoji: "🌼", name: "小雛菊", meaning: "純真與藏在心底的喜歡", desc: "平凡的日子裡，因為有你的微笑而變得特別溫柔。" },
-      { emoji: "🌸", name: "櫻花", meaning: "幸福與希望的降臨", desc: "願你每一個瞬間，都像春風拂面一樣輕盈快樂。" },
-      { emoji: "🪻", name: "薰衣草", meaning: "平靜與等待奇蹟", desc: "如果今天覺得有點累了，深呼吸一下，美好的事情正在路上。" },
-      { emoji: "💐", name: "滿天星", meaning: "甘願做配角的溫柔", desc: "在屬於你的舞台上盡情發光吧，總有人在默默為你喝采。" }
+      { emoji: "🌸", name: "櫻花", meaning: "幸福與希望的降臨", desc: "願你每一個瞬間，都像春風拂面一樣輕盈快樂。" }
     ];
 
     const blessings = [
       "🍀 Waybloss 幸運色：草地綠｜適合做一件讓自己微笑的小事",
       "🍀 Waybloss 幸運色：櫻花粉｜保持好心情，今天會有好事發生",
       "🍀 Waybloss 幸運色：天空藍｜放寬心胸，事情會比想像中順利",
-      "🍀 Waybloss 幸運色：薄荷綠｜給自己泡杯好茶，享受愜意時光",
-      "🍀 Waybloss 幸運色：奶油白｜今天很適合犒賞自己喜歡的小點心",
-      "🍀 Waybloss 幸運色：薰衣草紫｜直覺很準的一天，勇敢去嘗試吧"
+      "🍀 Waybloss 幸運色：薄荷綠｜給自己泡杯好茶，享受愜意時光"
     ];
 
     // 個人專屬種子與日期
@@ -714,7 +740,7 @@
     // 正面點擊特效
     document.getElementById('flower-card').addEventListener('click', function(e) {
       if (e.target.closest('.action-btn')) return;
-      spawnParticles(e.clientX, e.clientY, ['🍀', '✨', '💚', '🌸', '🌿'], 1);
+      spawnParticles(e.clientX, e.clientY, ['🍀', '✨', '💚', '🌸', '🎁'], 1);
     });
 
     function spawnParticles(x, y, icons, count) {
@@ -745,25 +771,29 @@
       });
     }
 
-    // ================= 澆花與圖鑑系統 =================
+    // ================= 盲盒養成與圖鑑系統 =================
     let waterCount = parseInt(localStorage.getItem('waybloss_water_count') || '0', 10);
     let lastWaterDate = localStorage.getItem('waybloss_last_water_date') || '';
     let unlockedDex = JSON.parse(localStorage.getItem('waybloss_unlocked_dex') || '[]');
 
-    // 決定玩家這次滿級會開出哪一朵花 (如果種子算出來剛好是 7，就是隱藏款四葉草！)
+    // 決定玩家這次滿級會開出哪一款盲盒花朵 (有機率抽中隱藏款 5, 6, 7)
     let myFlowerId = parseInt(localStorage.getItem('waybloss_my_flower_id') || '-1', 10);
     if (myFlowerId === -1) {
-      // 15% 機率抽中隱藏款四葉草 (ID: 7)，其餘從 0~6 隨機
       const rand = Math.random();
-      if (rand < 0.15) {
-        myFlowerId = 7;
+      if (rand < 0.08) {
+        myFlowerId = 7; // 水晶蓮 (極稀有)
+      } else if (rand < 0.18) {
+        myFlowerId = 6; // 星光花
+      } else if (rand < 0.32) {
+        myFlowerId = 5; // 四葉草
       } else {
-        myFlowerId = (userSeed + 3) % 7;
+        myFlowerId = (userSeed + 2) % 5; // 普通款 0~4
       }
       localStorage.setItem('waybloss_my_flower_id', myFlowerId);
     }
 
     const myBloom = allFlowers[myFlowerId];
+    let isBoxRevealed = (waterCount >= 10 && unlockedDex.includes(myFlowerId));
 
     function updateGardenUI() {
       document.getElementById('water-days').textContent = waterCount;
@@ -776,7 +806,7 @@
 
       if (waterCount === 0) {
         plantEmoji.textContent = "🌰";
-        stageName.textContent = "階段 1：沉睡的種子";
+        stageName.textContent = "階段 1：神秘種子";
         nextGoal.textContent = "距離發芽還差 1 天";
         progressFill.style.width = "8%";
       } else if (waterCount <= 2) {
@@ -788,44 +818,50 @@
       } else if (waterCount <= 5) {
         plantEmoji.textContent = "🌿";
         stageName.textContent = "階段 3：茂盛枝葉";
-        nextGoal.textContent = `距離含苞還差 ${6 - waterCount} 天`;
+        nextGoal.textContent = `距離盲盒成熟還差 ${6 - waterCount} 天`;
         progressFill.style.width = (waterCount * 10) + "%";
-        gardenDesc.textContent = "葉片越來越茂盛了！持續澆水，快要長出花苞了。";
+        gardenDesc.textContent = "葉片越來越茂盛了！持續澆水，準備迎接神祕盲盒開箱。";
       } else if (waterCount <= 9) {
-        plantEmoji.textContent = "🌷";
-        stageName.textContent = "階段 4：含苞待放";
-        nextGoal.textContent = `距離盛開還差 ${10 - waterCount} 天`;
+        plantEmoji.textContent = "🎁";
+        stageName.textContent = "階段 4：盲盒準備中";
+        nextGoal.textContent = `距離拆盲盒還差 ${10 - waterCount} 天`;
         progressFill.style.width = (waterCount * 10) + "%";
-        gardenDesc.textContent = "結出飽滿花苞了！再撐幾天就能看到它完全盛開！";
+        gardenDesc.textContent = "花圃中孕育出一個精美的神祕盲盒！再澆幾天水就能拆封了！";
       } else {
-        plantEmoji.textContent = myBloom.emoji;
-        stageName.textContent = `階段 5：${myBloom.name}`;
-        nextGoal.textContent = "🎉 已完全盛開！";
-        progressFill.style.width = "100%";
-        gardenDesc.textContent = `恭喜你成功培育出【${myBloom.name}】！花語：${myBloom.meaning}。`;
-
-        // 解鎖圖鑑
-        if (!unlockedDex.includes(myFlowerId)) {
-          unlockedDex.push(myFlowerId);
-          localStorage.setItem('waybloss_unlocked_dex', JSON.stringify(unlockedDex));
-
-          // 如果解鎖的是隱藏款四葉草 (ID: 7)，彈出祝賀視窗！
-          if (myFlowerId === 7) {
-            setTimeout(() => {
-              document.getElementById('secret-modal').classList.add('active');
-            }, 600);
-          }
+        // 滿 10 天成熟
+        if (!isBoxRevealed) {
+          plantEmoji.textContent = "🎁";
+          stageName.textContent = "🎉 盲盒已成熟！";
+          nextGoal.textContent = "點擊盆栽或澆水拆盲盒！";
+          progressFill.style.width = "100%";
+          gardenDesc.textContent = "你的專屬盲盒已經成熟可以拆封了！點擊下方按鈕或盆栽來拆開它吧！";
+        } else {
+          plantEmoji.textContent = myBloom.emoji;
+          stageName.textContent = `階段 5：${myBloom.name}`;
+          nextGoal.textContent = "🎉 盲盒已開箱完成！";
+          progressFill.style.width = "100%";
+          gardenDesc.textContent = `你已成功抽中【${myBloom.name}】！類型：${myBloom.type}。`;
         }
       }
 
-      if (lastWaterDate === todayStr) {
+      if (lastWaterDate === todayStr && waterCount < 10) {
         waterBtn.classList.add('watered');
         waterBtn.innerHTML = '<span>✅ 今日已澆水 · 明天再來吧</span>';
+      } else if (waterCount >= 10 && !isBoxRevealed) {
+        waterBtn.classList.remove('watered');
+        waterBtn.innerHTML = '<span>📦 拆開神祕盲盒！</span>';
       }
     }
 
     function waterPlant(event) {
       event.stopPropagation();
+      
+      // 如果已經滿 10 天但還沒拆盲盒，點擊直接觸發盲盒開箱
+      if (waterCount >= 10 && !isBoxRevealed) {
+        openUnboxModal();
+        return;
+      }
+
       if (lastWaterDate === todayStr) return;
 
       waterCount += 1;
@@ -838,14 +874,55 @@
       setTimeout(() => plantEmoji.classList.remove('plant-pop'), 500);
 
       const rect = plantEmoji.getBoundingClientRect();
-      spawnParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, ['💧', '💦', '🍀', '✨'], 8);
+      spawnParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, ['💧', '💦', '🎁', '✨'], 8);
 
       updateGardenUI();
+
+      // 若剛好第 10 天，自動彈出盲盒拆封視窗
+      if (waterCount === 10) {
+        setTimeout(() => openUnboxModal(), 600);
+      }
     }
 
-    // ================= 彈出視窗與裝飾風格管理 =================
+    // ================= 盲盒拆封與圖鑑管理 =================
+    function openUnboxModal(event) {
+      if (event) event.stopPropagation();
+      document.getElementById('unbox-modal').classList.add('active');
+    }
+
+    function revealBlindBox() {
+      document.getElementById('unbox-modal').classList.remove('active');
+      isBoxRevealed = true;
+
+      // 解鎖圖鑑
+      if (!unlockedDex.includes(myFlowerId)) {
+        unlockedDex.push(myFlowerId);
+        localStorage.setItem('waybloss_unlocked_dex', JSON.stringify(unlockedDex));
+      }
+
+      updateGardenUI();
+
+      // 如果抽中稀有/隱藏款 (ID >= 5)，彈出專屬豪華祝賀視窗
+      if (myFlowerId >= 5) {
+        document.getElementById('secret-emoji-icon').textContent = myBloom.emoji + "✨";
+        document.getElementById('secret-title-text').textContent = myBloom.secretTitle;
+        document.getElementById('secret-msg-text').textContent = myBloom.secretDesc;
+        setTimeout(() => {
+          document.getElementById('secret-modal').classList.add('active');
+        }, 500);
+      } else {
+        // 普通款祝賀
+        alert(`🎉 恭喜你成功開箱抽中【${myBloom.name}】！快去圖鑑查看收集進度吧！`);
+      }
+    }
+
     function openDexModal(event) {
       if (event) event.stopPropagation();
+      // 如果花滿 10 天但還沒開箱，點盆栽直接開箱
+      if (waterCount >= 10 && !isBoxRevealed) {
+        openUnboxModal();
+        return;
+      }
       renderDexGrid();
       document.getElementById('dex-modal').classList.add('active');
     }
@@ -868,7 +945,7 @@
         if (isUnlocked) unlockedCount++;
 
         const item = document.createElement('div');
-        item.className = `dex-item ${isUnlocked ? 'unlocked' : ''}`;
+        item.className = `dex-item ${isUnlocked ? (flower.id >= 5 ? 'secret-unlocked' : 'unlocked') : ''}`;
         item.innerHTML = `
           <span class="dex-emoji">${isUnlocked ? flower.emoji : '🔒'}</span>
           <span>${isUnlocked ? flower.name : '未解鎖'}</span>
@@ -886,7 +963,6 @@
       document.getElementById(`chip-${themeName}`).classList.add('active');
       localStorage.setItem('waybloss_garden_theme', themeName);
 
-      // 動態切換光暈顏色
       if (themeName === 'green') {
         document.getElementById('glow-1').style.background = '#bbf7d0';
         document.getElementById('glow-2').style.background = '#bfdbfe';
@@ -899,13 +975,12 @@
       }
     }
 
-    // 載入時恢復存檔風格
     const savedTheme = localStorage.getItem('waybloss_garden_theme');
     if (savedTheme) {
       setTheme(savedTheme);
     }
 
-    // 初始化花園介面
+    // 初始化花園
     updateGardenUI();
   </script>
 
