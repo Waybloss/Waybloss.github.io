@@ -481,11 +481,17 @@
       gap: 7px;
       margin-bottom: 8px;
     }
+    .dex-grid-special {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+      margin-bottom: 10px;
+    }
     .dex-item {
       background: #f8fafc;
       border: 1.5px solid #e2e8f0;
       border-radius: 12px;
-      padding: 6px 2px;
+      padding: 6px 4px;
       text-align: center;
       font-size: 10.5px;
       color: #64748b;
@@ -592,7 +598,7 @@
           </div>
 
           <div class="emoji-wrapper">
-            <div class="emoji" id="flower-emoji">🍀</div>
+            <div class="emoji" id="flower-emoji">🌷</div>
           </div>
 
           <div class="flower-name" id="flower-name">載入幸運中...</div>
@@ -620,7 +626,7 @@
             </a>
           </div>
 
-          <div class="footer-note">輕觸卡片收集幸運草 · 每天都有新驚喜</div>
+          <div class="footer-note">輕觸卡片收集花卉 · 每天都有新驚喜</div>
         </div>
       </div>
 
@@ -646,7 +652,7 @@
               <div class="progress-bar-fill" id="progress-fill"></div>
             </div>
             <div class="garden-desc" id="garden-desc">
-              每天澆水灌溉，滿 10 天即可拆開神祕花卉盲盒！解鎖普通款與稀有特別款式！
+              每天澆水灌溉，滿 10 天即可拆開神祕花卉盲盒！解鎖精選普通款與稀有隱藏款！
             </div>
           </div>
         </div>
@@ -686,13 +692,13 @@
       <div class="modal-text" style="font-size: 12px; margin-bottom: 4px; text-align: left; font-weight: 700; color: #475569;">✍️ 今日花園心情筆記：</div>
       <textarea class="note-input-box" id="garden-note" placeholder="寫下今天的心情或給自己的祝福..." rows="2" oninput="saveGardenNote()"></textarea>
 
-      <!-- 普通款式區 -->
-      <div class="dex-section-title">🌸 普通款式區</div>
+      <!-- 普通款式區 (共 7 款) -->
+      <div class="dex-section-title">🌸 精選普通款（共 7 款）</div>
       <div class="dex-grid" id="dex-grid-normal"></div>
 
-      <!-- 特別款式區（帶概率） -->
-      <div class="dex-section-title">🌟 特別款式專區（稀有盲盒）</div>
-      <div class="dex-grid" id="dex-grid-special"></div>
+      <!-- 特別款式區 (共 2 款隱藏款) -->
+      <div class="dex-section-title">🌟 隱藏款式專區（共 2 款 · 稀有盲盒）</div>
+      <div class="dex-grid-special" id="dex-grid-special"></div>
 
       <button class="modal-close-btn" onclick="closeDexModal()">儲存並關閉</button>
     </div>
@@ -709,13 +715,13 @@
     </div>
   </div>
 
-  <!-- ==================== 彈出視窗 3：特別/隱藏款祝賀 ==================== -->
+  <!-- ==================== 彈出視窗 3：隱藏款祝賀 ==================== -->
   <div class="modal-overlay" id="secret-modal">
     <div class="modal-card" style="border: 3px solid #f59e0b; background: #fffbeb;">
-      <div style="font-size: 46px; margin-bottom: 4px;" id="secret-emoji-icon">🌟💎</div>
-      <div class="modal-title" style="color: #b45309;" id="secret-title-text">【恭喜抽中特別款式！】</div>
+      <div style="font-size: 46px; margin-bottom: 4px;" id="secret-emoji-icon">🍀</div>
+      <div class="modal-title" style="color: #b45309;" id="secret-title-text">【恭喜解鎖隱藏款式！】</div>
       <div class="modal-text" id="secret-msg-text" style="color: #78350f; font-size: 13px;">
-        太神啦！你竟然在盲盒中抽中了稀有的特別款式！
+        太神啦！你竟然在盲盒中抽中了極稀有的隱藏款式！
       </div>
       <button class="modal-close-btn" style="background: #f59e0b;" onclick="closeSecretModal()">太棒了，收下歐氣！</button>
     </div>
@@ -726,10 +732,10 @@
     const petalsContainer = document.getElementById('petals');
     function updatePetals(theme) {
       petalsContainer.innerHTML = '';
-      let symbol = '🍀';
+      let symbol = '🌷';
       if (theme === 'pink') symbol = '🌸';
-      if (theme === 'purple') symbol = '💜';
-      if (theme === 'sunflower') symbol = '🌻';
+      if (theme === 'purple') symbol = '🦋';
+      if (theme === 'sunflower') symbol = '🌺';
       if (theme === 'night') symbol = '✨';
 
       for (let i = 0; i < 15; i++) {
@@ -744,29 +750,33 @@
       }
     }
 
-    // 2. 圖鑑資料庫（分成普通款與特別款，帶有概率）
+    // 2. 圖鑑資料庫：7 款普通款 + 2 款隱藏款 (四葉草、鐵刀木)
     const normalFlowers = [
-      { id: 0, emoji: "🌸", name: "早春粉櫻", meaning: "幸福與希望", type: "普通款", rate: "20%" },
-      { id: 1, emoji: "🌻", name: "燦爛向日葵", meaning: "陽光與勇氣", type: "普通款", rate: "20%" },
-      { id: 2, emoji: "🌹", name: "真愛紅玫瑰", meaning: "熱烈真摯", type: "普通款", rate: "20%" },
-      { id: 3, emoji: "🌷", name: "優雅鬱金香", meaning: "永恆祝福", type: "普通款", rate: "15%" },
-      { id: 4, emoji: "🌼", name: "純真小雛菊", meaning: "心底喜歡", type: "普通款", rate: "15%" }
+      { id: 0, emoji: "🌷", name: "優雅鬱金香", meaning: "永恆祝福", type: "普通款", rate: "15%" },
+      { id: 1, emoji: "🌹", name: "真愛紅玫瑰", meaning: "熱烈真摯", type: "普通款", rate: "15%" },
+      { id: 2, emoji: "🌼", name: "純真小雛菊", meaning: "心底喜歡", type: "普通款", rate: "15%" },
+      { id: 3, emoji: "🦋", name: "藍蝴蝶", meaning: "幽藍雅致與夢想", type: "普通款", rate: "15%" },
+      { id: 4, emoji: "🌺", name: "雞蛋花", meaning: "熱情活力與清新", type: "普通款", rate: "15%" },
+      { id: 5, emoji: "🏮", name: "吊鐘花", meaning: "迎春接福步步高升", type: "普通款", rate: "15%" },
+      { id: 6, emoji: "🌸", name: "洋紫荊", meaning: "堅韌純潔與繁盛", type: "普通款", rate: "10%" }
     ];
 
     const specialFlowers = [
-      { id: 5, emoji: "🍀", name: "四葉幸運草", meaning: "奇蹟與好運", type: "特別款式", rate: "6%", secretTitle: "【恭喜解鎖特別款式：四葉幸運草！】", secretDesc: "傳說中只有極少數人能遇見的四葉草！代表著真愛與無與倫比的好運，願你天天都被幸運女神眷顧！💚" },
-      { id: 6, emoji: "✨", name: "黃金星光花", meaning: "耀眼夢想成真", type: "特別款式", rate: "3%", secretTitle: "【恭喜解鎖特別款式：黃金星光花！】", secretDesc: "夜空中最閃耀的星光化身為花朵！這象徵著你擁有無限的潛能與光芒，所有心中的願望都將閃閃發光並實現！🌟" },
-      { id: 7, emoji: "💎", name: "晶鑽水晶蓮", meaning: "純潔永恆守護", type: "極稀有特別款", rate: "1%", secretTitle: "【恭喜解鎖【極稀有】特別款式：水晶蓮！】", secretDesc: "天啊！這是盲盒中最頂級的極稀有特別款！晶瑩剔透的水晶蓮代表著永恆不變的真心與純粹守護，擁有它的人注定會收穫一生一世的幸福！💎✨" }
+      { id: 7, emoji: "🍀", name: "四葉幸運草", meaning: "奇蹟與好運", type: "隱藏款", rate: "7%", secretTitle: "【恭喜解鎖隱藏款：四葉幸運草！】", secretDesc: "傳說中只有極少數人能遇見的四葉草！代表著真愛與無與倫比的好運，願你天天都被幸運女神眷顧！💚" },
+      { id: 8, emoji: "🪵", name: "鐵刀木", meaning: "堅毅沉穩與永恆守護", type: "隱藏款", rate: "3%", secretTitle: "【恭喜解鎖隱藏款：鐵刀木！】", secretDesc: "哇！你抽中了象徵堅毅不拔與沉穩守護的珍貴【鐵刀木】！它代表著鋼鐵般的意志與溫柔的保護傘，為你擋風遮雨、迎向美好未來！🪵🛡️" }
     ];
 
     const allFlowers = [...normalFlowers, ...specialFlowers];
 
-    // 花語每日資料庫與祝福語
+    // 每日花語輪換資料庫 (使用我們精選的普通花卉)
     const flowers = [
-      { emoji: "🍀", name: "四葉幸運草", meaning: "意想不到的奇蹟與幸運", desc: "恭喜你感應到四葉草！今天會有意想不到的小確幸與好運降臨在你身上。" },
-      { emoji: "🌹", name: "紅玫瑰", meaning: "熱烈的愛與真心", desc: "願你今天被滿滿的愛意與好運包圍，勇敢做自己喜歡的事。" },
-      { emoji: "🌻", name: "向日葵", meaning: "沉默的愛與陽光", desc: "無論今天天氣如何，你永遠是自己世界裡最耀眼的小太陽。" },
-      { emoji: "🌷", name: "鬱金香", meaning: "永恆的祝福與體貼", desc: "希望你今天一切順利，再忙也要記得按時吃飯、好好休息。" }
+      { emoji: "🌷", name: "優雅鬱金香", meaning: "永恆的祝福與體貼", desc: "希望你今天一切順利，再忙也要記得按時吃飯、好好休息。" },
+      { emoji: "🌹", name: "真愛紅玫瑰", meaning: "熱烈的愛與真心", desc: "願你今天被滿滿的愛意與好運包圍，勇敢做自己喜歡的事。" },
+      { emoji: "🌼", name: "純真小雛菊", meaning: "純真與藏在心底的喜歡", desc: "平凡的日子裡，因為有你的微笑而變得特別溫柔。" },
+      { emoji: "🦋", name: "藍蝴蝶", meaning: "幽藍雅致與夢想成真", desc: "展翅飛向你的夢想吧，今天會有意想不到的靈感與好運！" },
+      { emoji: "🌺", name: "雞蛋花", meaning: "新鮮的熱情與活力", desc: "今天也要充滿元氣地迎接挑戰，好運正悄悄向你靠近。" },
+      { emoji: "🏮", name: "吊鐘花", meaning: "迎春接福與步步高升", desc: "願你的學業、事業與生活都穩穩地節節高升，收穫滿滿的喜悅。" },
+      { emoji: "🌸", name: "洋紫荊", meaning: "堅韌純潔與秀麗繁盛", desc: "保持你那份獨特的真誠與美麗，世界會溫柔地回報你。" }
     ];
 
     const blessings = [
@@ -816,7 +826,7 @@
     // 正面點擊特效
     document.getElementById('flower-card').addEventListener('click', function(e) {
       if (e.target.closest('.action-btn')) return;
-      spawnParticles(e.clientX, e.clientY, ['🍀', '✨', '💚', '🌸', '🎁'], 1);
+      spawnParticles(e.clientX, e.clientY, ['🌷', '✨', '💚', '🌸', '🎁'], 1);
     });
 
     function spawnParticles(x, y, icons, count) {
@@ -855,14 +865,12 @@
     let myFlowerId = parseInt(localStorage.getItem('waybloss_my_flower_id') || '-1', 10);
     if (myFlowerId === -1) {
       const rand = Math.random();
-      if (rand < 0.01) {
-        myFlowerId = 7; // 水晶蓮 (1%)
-      } else if (rand < 0.04) {
-        myFlowerId = 6; // 星光花 (3%)
+      if (rand < 0.03) {
+        myFlowerId = 8; // 鐵刀木 (3%)
       } else if (rand < 0.10) {
-        myFlowerId = 5; // 四葉草 (6%)
+        myFlowerId = 7; // 四葉幸運草 (7%)
       } else {
-        myFlowerId = (userSeed + 1) % 5; // 普通款 0~4
+        myFlowerId = (userSeed + 1) % 7; // 普通款 0~6 (90%)
       }
       localStorage.setItem('waybloss_my_flower_id', myFlowerId);
     }
@@ -972,7 +980,7 @@
 
       updateGardenUI();
 
-      if (myFlowerId >= 5) {
+      if (myFlowerId >= 7) {
         document.getElementById('secret-emoji-icon').textContent = myBloom.emoji + "✨";
         document.getElementById('secret-title-text').textContent = myBloom.secretTitle;
         document.getElementById('secret-msg-text').textContent = myBloom.secretDesc;
@@ -1003,7 +1011,7 @@
     }
 
     function renderDexGrids() {
-      // 渲染普通款
+      // 渲染普通款 (共 7 款)
       const gridNormal = document.getElementById('dex-grid-normal');
       gridNormal.innerHTML = '';
       normalFlowers.forEach(flower => {
@@ -1018,7 +1026,7 @@
         gridNormal.appendChild(item);
       });
 
-      // 渲染特別款式
+      // 渲染隱藏款 (共 2 款)
       const gridSpecial = document.getElementById('dex-grid-special');
       gridSpecial.innerHTML = '';
       specialFlowers.forEach(flower => {
@@ -1027,7 +1035,7 @@
         item.className = `dex-item ${isUnlocked ? 'secret-unlocked' : ''}`;
         item.innerHTML = `
           <span class="dex-emoji">${isUnlocked ? flower.emoji : '❓'}</span>
-          <span>${isUnlocked ? flower.name : '特別款'}</span>
+          <span>${isUnlocked ? flower.name : '隱藏款'}</span>
           <span class="dex-rate">概率 ${flower.rate}</span>
         `;
         gridSpecial.appendChild(item);
@@ -1065,7 +1073,7 @@
 
     // 心情留言板存檔
     const noteBox = document.getElementById('garden-note');
-    const savedNote = localStorage.getItem('waybloss_garden_note') || '';
+    const savedNote = localStorage.getItem('waybloss_garden_note'] || '';
     noteBox.value = savedNote;
 
     function saveGardenNote() {
